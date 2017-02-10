@@ -1,0 +1,30 @@
+.text-italic {
+  font-style: italic;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-capitalize {
+  text-transform: uppercase;
+}
+
+.center-block {
+  display: block;
+  margin: 0 auto;
+}
+
+.text-white {
+  color: white;
+}
+
+a {
+  &.company-title {
+    text-decoration: none;
+  }
+}

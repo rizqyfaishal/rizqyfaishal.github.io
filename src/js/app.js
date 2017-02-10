@@ -1,0 +1,96 @@
+var app = angular.module('blog-app',['ui.router'])
+    .constant('BASE_URL_SERVICE', 'localhost:3000')
+    .constant('ACCESS_LEVEL', {
+        nonAuthentication: 1,
+        openAuthentication: 2,
+        needAuthentication: 3
+    })
+    .factory('AdminFactory', function ($http, AuthTokenFactory, $q, BASE_URL_SERVICE, ACCESS_LEVEL) {
+        return {
+            authorize: function (access) {
+                if(access == ACCESS_LEVEL.auth){
+                    return AuthTokenFactory.getToken() ;
+                } else {
+                    return true;
+                }
+            },
+            login: function (user) {
+                var defer = $q.defer();
+                $http.post(BASE_URL_SERVICE + '/admin/login',user).then(function (data) {
+                    defer.resolve(data);
+                });
+                return defer.promise;
+            },
+            logout: function () {
+                AuthTokenFactory.setToken();
+            }
+        }
+    })
+    .factory('AuthTokenFactory', function ($window) {
+        return {
+            key: 'auth-token',
+            storage: $window.localStorage,
+            setToken: function (token) {
+
+                if(token){
+                    this.storage.setItem(this.key,token);
+                } else {
+                    this.storage.removeItem(this.key);
+                }
+            },
+            getToken: function () {
+                return this.storage.getItem(this.key);
+            }
+        }
+    })
+    .factory('AuthInterceptor',function (AuthTokenFactory) {
+        return {
+            request: function (config) {
+                var token = AuthTokenFactory.getToken();
+                if(token){
+                    config.headers = config.headers || {};
+                    config.headers.Authorization = token;
+                }
+                return config;
+            }
+        }
+    })
+    .run(function ($rootScope, $state, AdminFactory, ACCESS_LEVEL, AuthTokenFactory) {
+        $rootScope.$on('$stateChangeStart',function (e, toState, toParams, fromState, fromParams) {
+            if(!AdminFactory.authorize(toState.data.access)){
+                e.preventDefault();
+                alert('Please login');
+                // $state.go('static.login');
+            } else if(toState.data.access == ACCESS_LEVEL.openAuthentication && AuthTokenFactory.getToken()){
+                e.preventDefault();
+                $state.go('admin.dashboard');
+            }
+        });
+        $rootScope.$on('$stateChangeError',function (e) {
+            e.preventDefault();
+            alert('Error');
+        });
+        $rootScope.$on('$stateChangeSuccess',function () {
+            document.title = $state.current.title;
+        });
+    })
+    .config(function ($httpProvider) {
+        $httpProvider.interceptors.push('AuthInterceptor');
+    })
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, ACCESS_LEVEL) {
+        $urlRouterProvider.otherwise('/');
+        $stateProvider
+            .state('static',{
+                abstract: true,
+                template: '<ui-view></ui-view>',
+                data: {
+                    access: ACCESS_LEVEL.nonAuthentication
+                }
+            })
+            .state('static.home',{
+                templateUrl: '/templates/home.html',
+                title: 'Welcome to my Home Page',
+                url: '/',
+                controller: 'HomeController'
+            })
+    });
