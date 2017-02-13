@@ -14,6 +14,10 @@ gulp.task('compile-js',function () {
             .src(['./src/js/angular.min.js',
             	'./src/js/angular-route.min.js',
             	'./src/js/angular-ui-router.min.js',
+				'./src/js/tinymce.min.js',
+				'./src/js/plugins/**/*.js',
+				'./src/js/themes/**/*.js',
+				'./src/js/skins/**/*.js',
             	'./src/js/app.js',
 				'./src/js/controllers/**/*.js'
 			])
@@ -30,6 +34,11 @@ gulp.task('compile-css', function(){
 			.pipe(concatCSS('app.min.css'))
 			.pipe(gulp.dest('./build/css/'));
 	});
+});
+
+gulp.task('copy-skins-tinymce', function () {
+	return gulp.src('./src/js/skins/**/*')
+		.pipe(gulp.dest('./build/js/skins'));
 });
 
 gulp.task('html-watch', function(){
@@ -65,4 +74,5 @@ gulp.task('optimize-images', function () {
 gulp.task('sass', function(){
 	gulp.watch('./src/scss/**/*.scss',['compile-css']);
 });
-gulp.task('default',['compile-js','compile-css','js','sass','copy-html','copy-fonts','copy-html','html-watch','optimize-images']);
+gulp.task('default',['compile-js','compile-css','copy-skins-tinymce','js','sass','copy-html','copy-fonts',
+	'copy-html','html-watch','optimize-images']);

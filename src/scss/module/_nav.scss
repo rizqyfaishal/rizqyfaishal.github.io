@@ -1,9 +1,9 @@
-$list-menu-count: 4;
+$list-menu-count: 3;
 $nav-default-color : white;
 
 nav {
   z-index: 10;
-  margin: 2em;
+  margin: 2em 0;
   position: fixed;
   width: 100%;
   top: 2em;
@@ -28,9 +28,18 @@ nav {
         }
       }
     }
+    opacity: 0;
+    -webkit-transition: opacity ease 0.7s;
+    -moz-transition: opacity ease 0.7s;
+    -ms-transition: opacity ease 0.7s;
+    -o-transition: opacity ease 0.7s;
+    transition: opacity ease 0.7s;
+    &.show {
+      opacity: 1;
+    }
   }
   .social {
-    margin-top: 10px;
+    margin-top: 5px;
     ul {
       margin: 0;
       padding: 0;
@@ -50,6 +59,7 @@ nav {
           border: 1px solid #cfd8d4;
           border-radius: 50%;
           .fa {
+            margin-left: 5px;
             vertical-align: middle;
             margin-bottom: 5px;
             font-size: 120%;
@@ -57,5 +67,13 @@ nav {
         }
       }
     }
+  }
+  -webkit-transition: top ease 0.7s;
+  -moz-transition: top ease 0.7s;
+  -ms-transition: top ease 0.7s;
+  -o-transition: top ease 0.7s;
+  transition: top ease 0.7s;
+  &.up {
+    top: -28px;
   }
 }

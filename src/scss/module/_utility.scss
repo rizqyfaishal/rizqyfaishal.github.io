@@ -1,3 +1,4 @@
+
 .text-italic {
   font-style: italic;
 }
@@ -27,4 +28,14 @@ a {
   &.company-title {
     text-decoration: none;
   }
+}
+
+.title-bordered-bottom {
+  margin-top: 1em!important;
+  margin-bottom: 0.3em!important;
+  border-bottom: 1px solid #bdc6c2;
+}
+
+.right-bordered {
+  border-right: 1px solid #cfd8d4;
 }

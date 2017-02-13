@@ -2286,6 +2286,81 @@ body {
   }
 }
 
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+input[type=text],
+textarea,
+input[type=password] {
+  box-sizing: border-box;
+  box-shadow: none;
+  width: 100%;
+  background-color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #d1d1d1;
+  height: 38px;
+  -webkit-appearance: none;
+  outline: none;
+  display: block;
+  margin-bottom: 2em;
+}
+
+input[type=text]:focus,
+textarea:focus,
+input[type=password]:focus {
+  border-color: #02a4a0;
+}
+
+textarea {
+  min-height: 100px;
+}
+
+input[type="submit"],
+input[type="button"],
+button {
+  padding: 5px 10px;
+  text-align: center;
+  border-radius: 5px;
+  display: block;
+  outline: none;
+  margin-top: 1em;
+}
+
+input[type="submit"].green,
+input[type="button"].green,
+button.green {
+  background-color: #02a4a0;
+  color: #fff;
+}
+
+input[type="submit"].green:hover,
+input[type="button"].green:hover,
+button.green:hover {
+  background-color: #02bab6;
+}
+
+input[type="submit"].center-block,
+input[type="button"].center-block,
+button.center-block {
+  margin: 0 auto;
+}
+
+input[type="submit"].left,
+input[type="button"].left,
+button.left {
+  float: left;
+}
+
+input[type="submit"].right,
+input[type="button"].right,
+button.right {
+  float: right;
+}
+
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -5362,12 +5437,27 @@ a.company-title {
   text-decoration: none;
 }
 
+.title-bordered-bottom {
+  margin-top: 1em !important;
+  margin-bottom: 0.3em !important;
+  border-bottom: 1px solid #bdc6c2;
+}
+
+.right-bordered {
+  border-right: 1px solid #cfd8d4;
+}
+
 nav {
   z-index: 10;
-  margin: 2em;
+  margin: 2em 0;
   position: fixed;
   width: 100%;
   top: 2em;
+  -webkit-transition: top ease 0.7s;
+  -moz-transition: top ease 0.7s;
+  -ms-transition: top ease 0.7s;
+  -o-transition: top ease 0.7s;
+  transition: top ease 0.7s;
 }
 
 nav a {
@@ -5382,12 +5472,18 @@ nav a p {
 nav ul.menu {
   width: 100%;
   list-style-type: none;
+  opacity: 0;
+  -webkit-transition: opacity ease 0.7s;
+  -moz-transition: opacity ease 0.7s;
+  -ms-transition: opacity ease 0.7s;
+  -o-transition: opacity ease 0.7s;
+  transition: opacity ease 0.7s;
 }
 
 nav ul.menu li {
   display: block;
   float: left;
-  width: 25%;
+  width: 33.33333%;
 }
 
 nav ul.menu li a {
@@ -5399,8 +5495,12 @@ nav ul.menu li a:hover {
   text-decoration: underline;
 }
 
+nav ul.menu.show {
+  opacity: 1;
+}
+
 nav .social {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 nav .social ul {
@@ -5428,9 +5528,14 @@ nav .social ul li a {
 }
 
 nav .social ul li a .fa {
+  margin-left: 5px;
   vertical-align: middle;
   margin-bottom: 5px;
   font-size: 120%;
+}
+
+nav.up {
+  top: -28px;
 }
 
 .home-view {
@@ -5475,7 +5580,7 @@ nav .social ul li a .fa {
   padding: 0;
   margin: 0;
   display: inline-block;
-  width: 24%;
+  width: 32%;
   text-align: center;
 }
 
@@ -5491,22 +5596,45 @@ nav .social ul li a .fa {
   font-size: 4em;
 }
 
+.contents span.close {
+  color: #bdc6c2;
+  font-size: 3em;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+}
+
+.contents span.close:hover {
+  color: #9ca4a0;
+}
+
 .contents .full-width-content {
+  padding: 2em 0;
   position: fixed;
   top: 100vh;
   left: 0;
-  overflow-y: scroll;
-  opacity: 0;
+  overflow: scroll;
   background-color: white;
   color: #2e2e2e;
   z-index: 1200;
+  height: 92vh;
   width: 100%;
+  transition: top cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.7s;
+}
+
+.contents .full-width-content .about {
+  line-height: 140%;
 }
 
 .contents .full-width-content.show {
-  opacity: 1;
-  bottom: 86%;
-  transition: all ease 1s;
+  top: 60px;
+}
+
+.contents .full-width-content h1,
+.contents .full-width-content p,
+.contents .full-width-content h3 {
+  margin: 0;
 }
 
 .bg-content-overlay {
@@ -5521,4 +5649,143 @@ nav .social ul li a .fa {
 .bg-content-overlay img {
   display: block;
   width: 100%;
+}
+
+.skills span {
+  line-height: 150%;
+}
+
+.skills span.skill-name {
+  display: block;
+  font-size: 120%;
+  float: left;
+}
+
+.skills span.skill-rating {
+  display: block;
+  float: right;
+}
+
+.skills span.skill-rating i.fa {
+  color: #cfd8d4;
+}
+
+.skills span.skill-rating i.fa.active {
+  color: #d8d736;
+}
+
+.works .col-lg-6 {
+  margin-bottom: 2em;
+}
+
+.works .col-lg-6 a {
+  height: 80px;
+  text-decoration: none;
+}
+
+.works .col-lg-6 a p {
+  padding-top: 1em;
+}
+
+.works .col-lg-6 a img {
+  display: block;
+  width: 100%;
+}
+
+.gallery .row {
+  margin-bottom: 1.5em;
+}
+
+.gallery .row .col-lg-4 .gallery-image {
+  height: 150px;
+}
+
+.gallery .row .col-lg-4 .gallery-image img {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.contact-section {
+  padding: 2em 0;
+}
+
+.contact-section p {
+  line-height: 150%;
+  margin-bottom: 1em !important;
+}
+
+form {
+  margin: 1em 0;
+}
+
+.login-form .form-wrapper {
+  box-shadow: 0px 2px 2px rgba(0,0,0,0.3);
+  background-color: #f7f7f7;
+}
+
+.login-form .form-wrapper .form {
+  padding: 2em;
+}
+
+.login-form .form-wrapper .form .image-logo {
+  display: block;
+  margin: 0 auto;
+  height: 150px;
+  width: 150px;
+}
+
+.login-form .form-wrapper .form .image-logo img {
+  width: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+hr {
+  border: 1px solid #9ca4a0;
+}
+
+.bottom-bordered a {
+  display: block;
+  margin: 2em 0;
+  text-decoration: none;
+  float: right;
+}
+
+.bottom-bordered a:hover {
+  text-decoration: underline;
+}
+
+.post {
+  padding: 1em 0;
+}
+
+.post h1 {
+  margin-top: 0;
+}
+
+.post hr {
+  margin-top: 2em;
+}
+
+.post .contents p {
+  margin-top: 0;
+}
+
+.post .controls a {
+  text-decoration: none;
+  color: #02a4a0;
+}
+
+.post .controls a:hover {
+  text-decoration: underline;
+}
+
+.loading-bar {
+  padding: 3em;
+}
+
+.loading-bar .fa {
+  display: block;
+  margin: 0 auto;
 }

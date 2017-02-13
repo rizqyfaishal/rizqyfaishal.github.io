@@ -1,14 +1,25 @@
 var app = angular.module('blog-app',['ui.router'])
-    .constant('BASE_URL_SERVICE', 'localhost:3000')
+    .constant('BASE_URL_SERVICE', 'http://localhost:3000')
     .constant('ACCESS_LEVEL', {
         nonAuthentication: 1,
         openAuthentication: 2,
         needAuthentication: 3
     })
+    .factory('Helper', function(){
+        return {
+            tagsParser: function(string){
+                try {
+                    var res = string.split(",");
+                } catch(e){
+                    console.log(e);
+                }       
+            }
+        }
+    })
     .factory('AdminFactory', function ($http, AuthTokenFactory, $q, BASE_URL_SERVICE, ACCESS_LEVEL) {
         return {
             authorize: function (access) {
-                if(access == ACCESS_LEVEL.auth){
+                if(access == ACCESS_LEVEL.needAuthentication){
                     return AuthTokenFactory.getToken() ;
                 } else {
                     return true;
@@ -16,7 +27,7 @@ var app = angular.module('blog-app',['ui.router'])
             },
             login: function (user) {
                 var defer = $q.defer();
-                $http.post(BASE_URL_SERVICE + '/admin/login',user).then(function (data) {
+                $http.post(BASE_URL_SERVICE + '/user/login',user).then(function (data) {
                     defer.resolve(data);
                 });
                 return defer.promise;
@@ -59,12 +70,13 @@ var app = angular.module('blog-app',['ui.router'])
         $rootScope.$on('$stateChangeStart',function (e, toState, toParams, fromState, fromParams) {
             if(!AdminFactory.authorize(toState.data.access)){
                 e.preventDefault();
-                alert('Please login');
-                // $state.go('static.login');
+                $state.go('static.login');
             } else if(toState.data.access == ACCESS_LEVEL.openAuthentication && AuthTokenFactory.getToken()){
                 e.preventDefault();
                 $state.go('admin.dashboard');
             }
+
+
         });
         $rootScope.$on('$stateChangeError',function (e) {
             e.preventDefault();
@@ -87,10 +99,61 @@ var app = angular.module('blog-app',['ui.router'])
                     access: ACCESS_LEVEL.nonAuthentication
                 }
             })
+            .state('admin', {
+                abstract: true,
+                template: '<ui-view></ui-view>',
+                data: {
+                    access: ACCESS_LEVEL.needAuthentication
+                }
+            })
+            .state('admin.dashboard',{
+                templateUrl: 'templates/dashboard.html',
+                title: 'Dashboard',
+                data: {
+                    access: ACCESS_LEVEL.needAuthentication
+                },
+                controller: 'DashboardController',
+                url: '/dashboard'
+            })
+            .state('admin.create',{
+                templateUrl: 'templates/create.html',
+                title: 'Create Posts',
+                data: {
+                    access: ACCESS_LEVEL.needAuthentication
+                },
+                controller: 'CreatePostController',
+                url: '/dashboard/create'
+            })
+            .state('admin.edit',{
+                templateUrl: 'templates/create.html',
+                title: 'Edit Post',
+                data: {
+                    access: ACCESS_LEVEL.needAuthentication
+                },
+                url: '/dashboard/:id/edit',
+                controller: 'EditPostController'
+            })
             .state('static.home',{
                 templateUrl: '/templates/home.html',
                 title: 'Welcome to my Home Page',
                 url: '/',
                 controller: 'HomeController'
+            })
+            .state('static.view', {
+                templateUrl: 'templates/view.html',
+                url: '/view/:id',
+                controller: 'ViewPostController',
+                data: {
+                    access: ACCESS_LEVEL.nonAuthentication
+                }
+            })
+            .state('static.login',{
+                templateUrl: '/templates/login.html',
+                title: 'Login',
+                url: '/login',
+                controller: 'LoginController',
+                data: {
+                    access: ACCESS_LEVEL.openAuthentication
+                }
             })
     });
