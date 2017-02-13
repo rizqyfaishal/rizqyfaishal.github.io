@@ -5789,3 +5789,14 @@ hr {
   display: block;
   margin: 0 auto;
 }
+
+.post .image-header {
+  height: 200px;
+  overflow: hidden;
+}
+
+.post .image-header img {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}

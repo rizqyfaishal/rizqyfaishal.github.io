@@ -1,4 +1,4 @@
-app.controller('HomeController', function ($scope) {
+app.controller('HomeController', function ($scope, $state) {
     $scope.title = 'Hello world';
     $scope.navigation = {
         showMenu: true
@@ -17,6 +17,10 @@ app.controller('HomeController', function ($scope) {
             } else {
                 $scope.contents[key_var] = false;
             }
+
+        }
+        if(key == 'blog' && $scope.contents['blog']){
+            $state.go('static.home.blog');
         }
     }
 });

@@ -1,4 +1,4 @@
-app.controller('CreatePostController', function ($scope) {
+app.controller('CreatePostController', function ($scope, $q, BASE_URL_SERVICE, $http, Helper) {
     $scope.message = 'Title';
     $scope.title = 'Tambah Post';
     tinymce.init({
@@ -23,5 +23,19 @@ app.controller('CreatePostController', function ($scope) {
 //			file_browser_callback : elFinderBrowser,
 //            relative_urls: true,
     });
+
+    $scope.save = function (post) {
+        var defer = $q.defer();
+        post.tags = Helper.tagsParser(post.tags);
+        post.permalink = post.title;
+        $http.post(BASE_URL_SERVICE+ '/posts/new', post).then(function (response) {
+            console.log(response);
+            defer.resolve(response);
+        });
+
+        defer.promise.then(function (response) {
+            console.log(response);
+        });
+    };
 
 });
