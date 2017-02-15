@@ -1,4 +1,4 @@
-app.controller('EditPostController', function ($http, $scope, BASE_URL_SERVICE, $q, $stateParams) {
+app.controller('EditPostController', function ($http, $scope, BASE_URL_SERVICE, $q, $stateParams, Helper) {
     var _id = $stateParams.id;
     console.log(_id);
     $scope.title = 'Edit Post';
@@ -11,6 +11,7 @@ app.controller('EditPostController', function ($http, $scope, BASE_URL_SERVICE, 
         });
         defer.promise.then(function (data) {
         $scope.post = data.data;
+        $scope.post.tags = Helper.tagsToString($scope.post.tags);
         console.log(data);
     });
     };

@@ -21,6 +21,9 @@ app.controller('HomeController', function ($scope, $state) {
         }
         if(key == 'blog' && $scope.contents['blog']){
             $state.go('static.home.blog');
+            console.log('trigger');
+        } else {
+            $state.go('static.home');
         }
     }
 });

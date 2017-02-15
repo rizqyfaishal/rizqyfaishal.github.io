@@ -22,15 +22,19 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="contents">
-                        <p>{{ post.content }}</p>
+                        <div>{{ post.content }}....</div>
                     </div>
                     <div class="controls">
-                        <p><a ui-sref="admin.edit({ id: post._id })">Edit</a>&nbsp;|&nbsp;<a href="#">Hapus</a></p>
+                        <p><a ui-sref="admin.edit({ id: post._id })">Edit</a>&nbsp;|&nbsp;
+                            <a ng-click="deleteConfirm(post._id);" style="cursor: pointer;">Hapus</a></p>
                     </div>
                 </div>
             </div>
             <hr>
         </div>
+    </div>
+    <div class="load-more">
+        <button ng-click="loadMore();" class="green center-block" ng-show="needLoadMore">Load more</button>
     </div>
     <div class="loading-bar" ng-show="fetchingData">
         <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>

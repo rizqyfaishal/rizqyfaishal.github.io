@@ -1,26 +1,9 @@
-var app = angular.module('blog-app', ['ui.router'])
+var app = angular.module('blog-app', ['ui.router','ui.tinymce'])
     .constant('BASE_URL_SERVICE', 'http://localhost:3000')
     .constant('ACCESS_LEVEL', {
         nonAuthentication: 1,
         openAuthentication: 2,
         needAuthentication: 3
-    })
-    .directive('tinymce', function () {
-        return {
-            restrict: 'C',
-            require: 'ngModel',
-            link: function (scope, element, attrs, modelCtrl) {
-                console.log(element);
-                element.tinymce({
-                    setup: function (e) {
-                        e.on('change keydown', function () {
-                            modelCtrl.$setViewValue(element.val());
-                            scope.$apply();
-                        })
-                    }
-                });
-            }
-        }
     })
     .factory('Helper', function () {
         return {
@@ -34,14 +17,21 @@ var app = angular.module('blog-app', ['ui.router'])
             tagsToString: function (arr) {
                 var s = '';
                 for (var i = 0; i < arr.length; i++) {
-                    if (i == arr.length - 1) {
+                    if (i != arr.length - 1) {
                         s = s + arr[i] + ", "
                     } else {
                         s = s + arr[i];
                     }
                 }
                 return s;
+            },
+            textSubString: function(string){
+                string = string.replace(/<[^>]*>||[\n\r]/gi, '');
+                string = string.substr(0, 350);
+                console.log(string);
+                return string;
             }
+
         }
     })
     .factory('AdminFactory', function ($http, AuthTokenFactory, $q, BASE_URL_SERVICE, ACCESS_LEVEL) {
@@ -112,6 +102,7 @@ var app = angular.module('blog-app', ['ui.router'])
         });
         $rootScope.$on('$stateChangeSuccess', function () {
             document.title = $state.current.title;
+            console.log($state);
         });
     })
     .config(function ($httpProvider) {
@@ -125,7 +116,8 @@ var app = angular.module('blog-app', ['ui.router'])
                 template: '<ui-view></ui-view>',
                 data: {
                     access: ACCESS_LEVEL.nonAuthentication
-                }
+                },
+                url: ''
             })
             .state('admin', {
                 abstract: true,
@@ -172,11 +164,13 @@ var app = angular.module('blog-app', ['ui.router'])
                 controller: 'ListPostController',
                 data: {
                     access: ACCESS_LEVEL.nonAuthentication
-                }
+                },
+                title: 'Welcome to my Blog',
+                url: 'blog'
             })
             .state('static.home.view', {
                 templateUrl: 'templates/view.html',
-                url: '/view/:id',
+                url: 'view/:id',
                 controller: 'ViewPostController',
                 data: {
                     access: ACCESS_LEVEL.nonAuthentication
@@ -185,7 +179,7 @@ var app = angular.module('blog-app', ['ui.router'])
             .state('static.login', {
                 templateUrl: '/templates/login.html',
                 title: 'Login',
-                url: '/login',
+                url: 'login',
                 controller: 'LoginController',
                 data: {
                     access: ACCESS_LEVEL.openAuthentication

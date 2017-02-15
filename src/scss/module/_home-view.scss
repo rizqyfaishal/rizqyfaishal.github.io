@@ -3,6 +3,7 @@
   display: table;
   width: 100%;
   height: 100vh;
+
   .content {
     display: table-cell;
     vertical-align: middle;
@@ -21,18 +22,13 @@
     }
     .nav-controller {
       margin-top: 3em;
-      ul {
-        padding: 0;
-        margin: 0;
-        list-style-type: none;
-        width: 100%;
-        li {
-          padding: 0;
-          margin: 0;
-          display: inline-block;
-          width: (96%/$list-menu-count);
+      .row {
+      
+        .col-lg-4 {
           text-align: center;
+          margin: 1em 0;
           a {
+            cursor: pointer;
             color: $nav-default-color;
             text-align: center;
             text-decoration: none;
@@ -50,6 +46,7 @@
 
 .contents {
   span.close {
+    z-index: 10;
     color: #bdc6c2;
     font-size: 3em;
     position: absolute;
@@ -91,6 +88,8 @@
   height: 100vh;
   top: 0;
   left: 0;
+  background: url('/images/bg/home.jpg') no-repeat;
+  background-size: cover;
   img {
     display: block;
     width: 100%;
@@ -163,4 +162,42 @@
 
 form {
   margin: 1em 0;
+}
+
+ @media(max-width: 520px) {
+  .home-view {
+    height: 130vh;
+  }  
+
+  nav {
+      margin: 0;
+      .company-title {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+      }
+  }
+  .social {
+      float: none;
+      margin: 0 auto;
+      ul {
+        text-align: center;
+        display: block;
+        margin: 0 auto;
+      }
+  }  
+  .content {
+    padding-top: 2em;
+    &.show{
+      top: 145px;
+    }
+  }
+
+  .contents {
+    .full-width-content {
+      &.show {
+        top: 145px;
+      }
+    }
+  }
 }

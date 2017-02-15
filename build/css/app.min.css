@@ -14,6 +14,8 @@ html {
 }
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: 'Raleway';
 }
 
@@ -5487,6 +5489,7 @@ nav ul.menu li {
 }
 
 nav ul.menu li a {
+  cursor: pointer;
   text-align: center;
   text-decoration: none;
 }
@@ -5538,6 +5541,12 @@ nav.up {
   top: -28px;
 }
 
+@media (max-width: 520px) {
+  nav.up {
+    top: 10px;
+  }
+}
+
 .home-view {
   z-index: 10;
   display: table;
@@ -5569,34 +5578,26 @@ nav.up {
   margin-top: 3em;
 }
 
-.home-view .content .nav-controller ul {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  width: 100%;
-}
-
-.home-view .content .nav-controller ul li {
-  padding: 0;
-  margin: 0;
-  display: inline-block;
-  width: 32%;
+.home-view .content .nav-controller .row .col-lg-4 {
   text-align: center;
+  margin: 1em 0;
 }
 
-.home-view .content .nav-controller ul li a {
+.home-view .content .nav-controller .row .col-lg-4 a {
+  cursor: pointer;
   color: #fff;
   text-align: center;
   text-decoration: none;
 }
 
-.home-view .content .nav-controller ul li a .font-block {
+.home-view .content .nav-controller .row .col-lg-4 a .font-block {
   display: block;
   margin: 0 auto;
   font-size: 4em;
 }
 
 .contents span.close {
+  z-index: 10;
   color: #bdc6c2;
   font-size: 3em;
   position: absolute;
@@ -5644,6 +5645,8 @@ nav.up {
   height: 100vh;
   top: 0;
   left: 0;
+  background: url("../../images/bg/home.jpg") no-repeat;
+  background-size: cover;
 }
 
 .bg-content-overlay img {
@@ -5717,6 +5720,45 @@ nav.up {
 
 form {
   margin: 1em 0;
+}
+
+@media (max-width: 520px) {
+  .home-view {
+    height: 130vh;
+  }
+
+  nav {
+    margin: 0;
+  }
+
+  nav .company-title {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .social {
+    float: none;
+    margin: 0 auto;
+  }
+
+  .social ul {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .content {
+    padding-top: 2em;
+  }
+
+  .content.show {
+    top: 145px;
+  }
+
+  .contents .full-width-content.show {
+    top: 145px;
+  }
 }
 
 .login-form .form-wrapper {
@@ -5799,4 +5841,58 @@ hr {
   display: block;
   width: 100%;
   margin: 0 auto;
+}
+
+.post .content {
+  margin: 1em 0;
+}
+
+.post-view .image-header-big {
+  overflow: hidden;
+  height: 400px;
+}
+
+.post-view .image-header-big img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.post-view .post-title {
+  margin: 0.5em 0;
+}
+
+.post-view .post-title h1 {
+  margin: 1em 0;
+}
+
+.post-view .post-content {
+  margin: 1em 0;
+}
+
+.post-view .tags {
+  margin-bottom: 1em;
+}
+
+.post-view .tags .tag-item {
+  font-size: 85%;
+  background-color: grey;
+  border-radius: 3px;
+  padding: 7px;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.post-view .summary-icon {
+  margin-right: 1em;
+  display: inline-block;
+  font-size: 150%;
+}
+
+.response-create {
+  margin-top: 2em;
+  background-color: #f7f7f7;
+  padding: 1em 2em;
 }

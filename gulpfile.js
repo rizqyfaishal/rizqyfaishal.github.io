@@ -12,7 +12,7 @@ gulp.task('compile-js',function () {
     del('./build/js/**/*.js').then(function () {
         return gulp
             .src(['./src/js/angular.min.js',
-            	'./src/js/angular-route.min.js',
+            	'./src/js/angular-ui-tinymce.js',
             	'./src/js/angular-ui-router.min.js',
 				'./src/js/tinymce.min.js',
 				'./src/js/plugins/**/*.js',

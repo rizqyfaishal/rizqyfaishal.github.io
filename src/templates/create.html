@@ -25,15 +25,15 @@
                 </div>
                 <div class="col-lg-12">
                     <label for="content">Content</label>
-                    <textarea name="content" id="content" class="tinymce" ng-model="post.content"></textarea>
+                    <textarea name="content" ui-tinymce="tinymceOptions" id="content"
+                              class="tinymce" ng-model="post.content"></textarea>
                 </div>
             </div>
             <div class="submit-button">
-                <button ng-click="save(post)" class="green right">Create Post</button>
+                <button ng-click="save(post)" class="green center-block">Save Post</button>
             </div>
         </form>
     </div>
-    {{ post }}
     <hr>
 </div>
 <footer class="footer">

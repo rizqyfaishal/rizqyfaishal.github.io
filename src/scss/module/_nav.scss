@@ -21,6 +21,7 @@ nav {
       float: left;
       width: (100%/$list-menu-count);
       a {
+        cursor: pointer;
         text-align: center;
         text-decoration: none;
         &:hover {
@@ -75,5 +76,14 @@ nav {
   transition: top ease 0.7s;
   &.up {
     top: -28px;
+  }
+}
+
+@media(max-width: 520px){
+  nav {
+    &.up {
+      top: 10px;
+    }
+   
   }
 }
